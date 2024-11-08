@@ -1,5 +1,6 @@
 *{
     margin: 0;
+    font-family: 'Poppins', sans-serif;
 }
 
 button{
@@ -31,3 +32,62 @@ input{
     background-color: rgb(240, 240, 240);
     border-style: none;
 }
+
+h3, .cor{
+    color:#FF4E00
+}
+
+.dica {
+    display: flex;
+    align-items: center;
+}
+
+.dica img {
+    margin-right: 8px; 
+    width: 40px; 
+    height: auto;
+}
+
+
+
+.cardapio_ao_vivo {
+    position: relative;
+    background-color: #FF4E00;
+    padding: 9px;
+    width: 40px;
+    height: 250px;
+    border-top-left-radius: 30px; 
+    border-bottom-left-radius: 30px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cardapio-texto {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transform: rotate(270deg); 
+    white-space: nowrap;
+}
+
+.indicador {
+    position: absolute;
+    top: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #a5d6a7; 
+    border-radius: 50%;
+    border: 3px solid white;
+}
+
+form{
+    width: 600px;
+}
+
+.dir{
+    margin-right: 20px;
+}
+
