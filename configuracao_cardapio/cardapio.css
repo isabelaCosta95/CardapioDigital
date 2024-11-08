@@ -48,8 +48,6 @@ h3, .cor{
     height: auto;
 }
 
-
-
 .cardapio_ao_vivo {
     position: relative;
     background-color: #FF4E00;
@@ -84,10 +82,23 @@ h3, .cor{
 }
 
 form{
+    margin:10px;
     width: 600px;
+    padding: 10px;
+    border: 1.5px solid #f8f5f5;
+    border-radius: 2px;
 }
 
 .dir{
     margin-right: 20px;
 }
 
+.editar img{
+    width: 15px;
+    margin-top: 5px;
+}
+
+.form1{
+    display: flex;
+    flex-direction: row;
+}
