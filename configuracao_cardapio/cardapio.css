@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+}
+
+button{
+    background-color: #FF4E00;
+    border-style: none;
+    padding: 5px;
+    border-radius: 5px;
+    width: 120px;
+    color: white;
+
+}
+
+.descricao{
+    display: flex;
+    flex-direction: row;
+}
+
+.exemplo{
+    color: rgb(202, 201, 201);
+    font-size: 15px;
+}
+
+.produto{
+    display: flex;
+    width: 100%;
+}
+
+input{
+    background-color: rgb(240, 240, 240);
+    border-style: none;
+}
