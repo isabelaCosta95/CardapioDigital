@@ -1,6 +1,7 @@
 *{
     margin: 0;
     font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
 }
 
 button{
@@ -9,7 +10,9 @@ button{
     padding: 5px;
     border-radius: 5px;
     width: 120px;
+    height: 35px;
     color: white;
+    margin-top: 15px;
 
 }
 
@@ -20,21 +23,25 @@ button{
 
 .exemplo{
     color: rgb(202, 201, 201);
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .produto{
-    display: flex;
     width: 100%;
 }
 
 input{
-    background-color: rgb(240, 240, 240);
-    border-style: none;
+    margin-top: 10px;
+    background-color: rgb(248, 248, 248);
+    border: 1px solid rgb(232, 231, 231);
 }
 
-h3, .cor{
+h2, .cor{
     color:#FF4E00
+}
+
+h3{
+    margin-bottom: 5px;
 }
 
 .dica {
@@ -98,7 +105,32 @@ form{
     margin-top: 5px;
 }
 
-.form1{
-    display: flex;
-    flex-direction: row;
+.grid{
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px 200px ;
+}
+
+.form2{
+    width: 70%;
+}
+
+table{
+    margin-top: 15px;
+}
+
+th{
+    padding: 5px;
+}
+
+table , th,  td, tr{
+    border-collapse: collapse;
+    font-weight: normal;
+    text-align: left;
+    border: 1px solid rgb(232, 231, 231);
+    background-color: rgb(248, 248, 248);
+}
+
+td{
+    width: 250px;
+    height: 200px;
 }
