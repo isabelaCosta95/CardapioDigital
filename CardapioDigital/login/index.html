@@ -19,7 +19,7 @@
         <form>
             <input type="text" id="email" placeholder="Email" class="input-field">
             <input type="password" placeholder="Senha" id="senha" class="input-field">
-            <a href="/configuracao_cardapio/index.html">
+            <a id="btnEntrar">
                 <button type="button" class="login-button">ENTRAR</button>
             </a>
         </form>
@@ -35,5 +35,24 @@
             <a href="https://www.instagram.com" target="_blank" class="icon">Instagram</a>
         </div>
     </div>
+
+    <script type="module">
+        import { Usuarios } from '../storage/usuarios.js'
+
+        const usuarios = new Usuarios();
+
+        const inputEmail = document.querySelector("#email");
+        const inputSenha = document.querySelector("#senha");
+        const btnEntrar = document.querySelector("#btnEntrar");
+
+        btnEntrar.addEventListener('click', () => {
+            if(usuarios.login(inputEmail.value,inputSenha.value)){
+                location.href = '/configuracao_cardapio';
+            }else{
+                alert('Login inválido!')
+            };
+        })
+
+    </script>
 </body>
 </html>
