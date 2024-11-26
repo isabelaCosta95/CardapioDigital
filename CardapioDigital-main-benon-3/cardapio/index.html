@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot Grill Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<style>
+    footer {
+        background-color: blue;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        padding: 24px;
+        /* display: flex; */
+        gap: 24px;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+        display: none;
+        cursor: pointer;
+    }
+</style>
+
+<body>
+    <div class="header">
+        <img src="../assets/logo.png" alt="Hot Grill Logo" class="logo">
+        <p class="subtitle">CONHEÇA NOSSO MAGNÍFICO CARDÁPIO</p>
+        <h1 class="title">NOME DO RESTAURANTE</h1>
+    </div>
+
+    <div class="products">
+    </div>
+    <div class="footer">
+        <img src="../assets/logo.png" alt="Hot Grill Logo" class="logo-small">
+        <p class="footer-text">Venha nos conhecer</p>
+        <p class="footer-text end">Rua Manoel Abelardo Peixer, 21 - Barreiros, São José - SC, 88110-055</p>
+        <p class="footer-text">Peça pelo WhatsApp: <span class="telefone">Telefone</span></p>
+    </div>
+
+    <footer>
+
+        <p>Carrinho</p>
+
+        <p id="price-cart">R$ 0,00</p>
+
+    </footer>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+
+
+
+            // Transformar as informações do restaurante dinamica
+
+            const produtos = JSON.parse(localStorage.getItem('produtos')) || {};
+            const _restaurante = JSON.parse(localStorage.getItem('restaurante') || '{}');
+
+            const nomeRestaurante = _restaurante.restaurante || 'Nome não disponível';
+            const enderecoRestaurante = _restaurante.endereco || 'Endereço não disponível';
+            const numeroRestaurante = _restaurante.numero || 'Número não disponível';
+
+            // transformar as informações do restaurante dinamica de acordo com o formulario
+
+            document.querySelector('.title').innerText = nomeRestaurante;
+            document.querySelector('.end').innerText = enderecoRestaurante;
+            document.querySelector('.telefone').innerText = numeroRestaurante;
+
+            // Transformar os produtos dinamicos de acordo com os produtos existentes cadastrados
+
+            const container = document.querySelector('.products');
+            const carrinho = [];
+            let totalCarrinho = 0;
+
+            Object.keys(produtos).forEach(categoria => {
+                const section = document.createElement('section');
+                section.innerHTML = `<p class="title">${categoria}</p>`;
+
+                const productSection = document.createElement('div');
+                productSection.classList.add('products-sections');
+
+                produtos[categoria].forEach(produto => {
+                    const card = document.createElement('div');
+                    card.classList.add('card-product');
+                    card.innerHTML = `
+                        <p class="produto-nome">${produto.nome}</p>
+                        <div class="price">
+                            <p class="produto-preco">R$ ${produto.preco}</p>
+                        </div>
+                    `;
+                    productSection.append(card);
+                });
+
+                section.append(productSection);
+                container.append(section);
+            });
+
+            const cards = document.querySelectorAll('.card-product');
+
+            // Criar carrinho de produtos
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+
+
+
+                    const nome = card.querySelector('.produto-nome').innerText;
+                    const precoTexto = card.querySelector('.produto-preco').innerText;
+
+                    const precoNumerico = parseFloat(precoTexto.replace(/[^0-9,.-]+/g, '').replace(',', '.'));
+
+                    const produtoSelecionado = { nome, preco: precoNumerico };
+                    carrinho.push(produtoSelecionado);
+
+                    totalCarrinho += precoNumerico;
+
+                    const priceCart = document.getElementById('price-cart');
+                    priceCart.innerText = `Total: R$ ${totalCarrinho.toFixed(2)}`;
+
+                    document.querySelector('footer').style.display = 'flex';
+
+                    // Direcionar produtos no whatsapp
+
+
+                    document.querySelector('footer').addEventListener('click', () => {
+                        const cartitem = carrinho.map(item => {
+                            return `Produto: ${item.nome} - Preço: R$ ${item.preco} | `;
+                        }).join("");
+
+                        const mensagem = encodeURIComponent(cartitem);
+                        const phone = numeroRestaurante;
+
+                        window.open(`https://wa.me/${phone}?text=${mensagem}`, "_blank");
+                    })
+                });
+            });
+
+
+        });
+    </script>
+
+</body>
+
+</html>

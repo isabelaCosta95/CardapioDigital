@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+    <title>Cardápio</title>
+</head>
+
+<body>
+    <section class="menu">
+        <p>.</p>
+    </section>
+    <section class="principal">
+        <h2>Cardápio</h2>
+        <div class="descricao">
+            <div class="esq">
+                <form class="form1">
+                    <h3 class="editar">
+                        <img src="../assets/editar.png">
+                        Descrição
+                    </h3>
+
+                    <div class="grid2">
+
+                        <div class="item">
+                            <label>Restaurante</label>
+                            <input type="text" id="restaurante" />
+                            <p class="exemplo">ex. hot grill</p>
+                        </div>
+
+                        <div class="item">
+                            <label>Telefone</label>
+                            <input type="text" id="numero" />
+                            <p class="exemplo">ex. (00) 00000-0000</p>
+                        </div>
+
+                        <div class="item">
+                            <label>Endereço</label>
+                            <input type="text" id="endereco" />
+                            <p class="exemplo">ex. Rua Joaquim Constantino n°8</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="dir">
+                <h4 class="dica">
+                    <img src="../assets/smile.png" alt="Smiley"> Super Dica!!!
+                </h4>
+                <p>Essas <span class="cor">informações</span> são <span class="cor">essenciais</span> para que os
+                    clientes possam encontrá-lo e entrar em contato facilmente.
+                    Um cadastro completo aumenta a <span class="cor">visibilidade</span> do seu negócio e melhora a
+                    <span class="cor">comunicação</span> com os <span class="cor">clientes</span>.
+                    Não perca a oportunidade de se destacar!
+                </p>
+            </div>
+            <div class="cardapio_ao_vivo">
+                <div class="indicador"></div>
+                <span class="cardapio-texto">Cardápio ao vivo</span>
+            </div>
+        </div>
+        <div class="produto">
+            <div class="form2">
+                <h3 class="editar">
+                    <img src="../assets/editar.png">
+                    Produtos
+                </h3>
+
+                <div class="grid">
+                    <div class="item">
+                        <label>Nome</label>
+                        <input id="nome"/>
+                        <p class="exemplo">ex. Suco de laranja</p>
+                    </div>
+
+                    <div class="item">
+                        <label>Categoria</label>
+                        <input id="categoria" />
+                        <p class="exemplo">ex. bebidas</p>
+                    </div>
+
+                    <div class="item">
+                        <label>Preço</label>
+                        <input id="preco" />
+                        <p class="exemplo">ex. 15.00</p>
+                    </div>
+
+                    <button type="submit" onclick="Adicionar()">Adicionar</button>
+                </div>
+
+                <div class="table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Categoria</th>
+                                <th>Preço (R$)</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        const btnCardapio = document.querySelector('.cardapio_ao_vivo');
+        btnCardapio.addEventListener('click', () => {
+            open('http://127.0.0.1:5500/cardapio/index.html', 'blank')
+        });
+
+        const restaurante = document.getElementById('restaurante');
+        const numero = document.getElementById('numero');
+        const endereco = document.getElementById('endereco');
+
+        const nome = document.getElementById('nome');
+        const categoria = document.getElementById('categoria');
+        const preco = document.getElementById('preco');
+
+        const tabela = document.querySelector('.tbody');
+
+        function Pegar() {
+            const produtosSalvos = JSON.parse(localStorage.getItem('produtos')) || {};
+            const _restaurante = JSON.parse(localStorage.getItem('restaurante') || '{}');
+
+            restaurante.value = _restaurante.restaurante ?? '';
+            numero.value = _restaurante.numero ?? '';
+            endereco.value = _restaurante.endereco ?? '';
+
+            tabela.innerHTML = '';
+
+
+
+            for (const categoria in produtosSalvos) {
+                produtosSalvos[categoria].forEach((produto) => {
+                    const linha = document.createElement('tr');
+                    linha.innerHTML = `
+                        <td>${produto.nome}</td>
+                        <td>${categoria}</td>
+                        <td>${produto.preco}</td>
+                        <td><button class="btn-remove">🗑️</button></td>
+                    `;
+
+                    linha.querySelector('.btn-remove').addEventListener('click', () => {
+                        if (confirm("Você deseja apagar: " + produto.nome)) {
+                            Remover(produto);
+                            linha.remove(); 
+                        }
+                    });
+
+                    tabela.append(linha);
+                });
+            }
+        }
+
+
+
+        function Adicionar() {
+            const _restaurante = JSON.parse(localStorage.getItem('restaurante')) || {};
+            const produtosSalvos = JSON.parse(localStorage.getItem('produtos')) || {};
+
+            const produto = {
+                nome: nome.value,
+                categoria: categoria.value,
+                preco: preco.value,
+            };
+
+            if (!produtosSalvos[produto.categoria]) {
+                produtosSalvos[produto.categoria] = [];
+            }
+
+
+            //Salvar as informações do formulário dos produtos e dados do restaurante no local storage
+            produtosSalvos[produto.categoria].push(produto);
+            localStorage.setItem('produtos', JSON.stringify(produtosSalvos));
+
+            _restaurante.restaurante = restaurante.value;
+            _restaurante.numero = numero.value;
+            _restaurante.endereco = endereco.value;
+            localStorage.setItem('restaurante', JSON.stringify(_restaurante));
+
+
+
+            const linha = document.createElement('tr');
+            linha.innerHTML = `
+                <td>${produto.nome}</td>
+                <td>${produto.categoria}</td>
+                <td>${produto.preco}</td>
+                <td><button class="btn-remove">🗑️</button></td>
+            `;
+
+            linha.querySelector('.btn-remove').addEventListener('click', () => {
+                if (confirm("Você deseja apagar: " + produto.nome)) {
+                    Remover(produto);
+                    linha.remove(); 
+                }
+            });
+
+            tabela.append(linha);
+        }
+
+        // função para remover produtos da tela e do cardápio
+
+        function Remover(produto) {
+            const produtosSalvos = JSON.parse(localStorage.getItem('produtos')) || {};
+
+            if (produtosSalvos[produto.categoria]) {
+                produtosSalvos[produto.categoria] = produtosSalvos[produto.categoria].filter(
+                    (p) => p.nome !== produto.nome || p.preco !== produto.preco
+                );
+
+                if (produtosSalvos[produto.categoria].length === 0) {
+                    delete produtosSalvos[produto.categoria];
+                }
+
+                localStorage.setItem('produtos', JSON.stringify(produtosSalvos));
+            }
+        }
+
+        Pegar();
+    </script>
+
+</body>
+
+</html>
