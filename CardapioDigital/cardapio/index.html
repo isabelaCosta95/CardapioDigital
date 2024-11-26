@@ -52,6 +52,9 @@
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
+
+
+
             // Transformar as informações do restaurante dinamica
 
             const produtos = JSON.parse(localStorage.getItem('produtos')) || {};
@@ -97,6 +100,30 @@
             });
 
             const cards = document.querySelectorAll('.card-product');
+
+            // Criar carrinho de produtos
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+
+
+
+                    const nome = card.querySelector('.produto-nome').innerText;
+                    const precoTexto = card.querySelector('.produto-preco').innerText;
+
+                    const precoNumerico = parseFloat(precoTexto.replace(/[^0-9,.-]+/g, '').replace(',', '.'));
+
+                    const produtoSelecionado = { nome, preco: precoNumerico };
+                    carrinho.push(produtoSelecionado);
+
+                    totalCarrinho += precoNumerico;
+
+                    const priceCart = document.getElementById('price-cart');
+                    priceCart.innerText = `Total: R$ ${totalCarrinho.toFixed(2)}`;
+
+                    document.querySelector('footer').style.display = 'flex';
+                });
+            });
         });
     </script>
 
