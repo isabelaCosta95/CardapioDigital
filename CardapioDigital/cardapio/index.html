@@ -122,8 +122,24 @@
                     priceCart.innerText = `Total: R$ ${totalCarrinho.toFixed(2)}`;
 
                     document.querySelector('footer').style.display = 'flex';
+
+                    // Direcionar produtos no whatsapp
+
+
+                    document.querySelector('footer').addEventListener('click', () => {
+                        const cartitem = carrinho.map(item => {
+                            return `Produto: ${item.nome} - Preço: R$ ${item.preco} | `;
+                        }).join("");
+
+                        const mensagem = encodeURIComponent(cartitem);
+                        const phone = numeroRestaurante;
+
+                        window.open(`https://wa.me/${phone}?text=${mensagem}`, "_blank");
+                    })
                 });
             });
+
+
         });
     </script>
 
