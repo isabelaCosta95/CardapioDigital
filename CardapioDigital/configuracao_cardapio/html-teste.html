@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cardápio ao Vivo</title>
+    <style>
+        .cardapio_ao_vivo {
+            position: relative;
+            background-color: #ff5722; /* Cor de fundo laranja */
+            padding: 20px;
+            width: 60px;
+            height: 200px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cardapio-texto {
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transform: rotate(270deg); /* Rotaciona o texto para a esquerda */
+            white-space: nowrap;
+        }
+
+        .indicador {
+            position: absolute;
+            top: 20px;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background-color: #a5d6a7; /* Cor verde */
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div class="cardapio_ao_vivo">
+        <div class="indicador"></div>
+        <span class="cardapio-texto">Cardápio ao vivo</span>
+    </div>
+</body>
+</html>
