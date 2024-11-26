@@ -73,19 +73,19 @@
                 <div class="grid">
                     <div class="item">
                         <label>Nome</label>
-                        <input id="nome"/>
+                        <input id="nome" type="text" />
                         <p class="exemplo">ex. Suco de laranja</p>
                     </div>
 
                     <div class="item">
                         <label>Categoria</label>
-                        <input id="categoria" />
+                        <input id="categoria" type="text" />
                         <p class="exemplo">ex. bebidas</p>
                     </div>
 
                     <div class="item">
                         <label>Preço</label>
-                        <input id="preco" />
+                        <input id="preco" type="number" />
                         <p class="exemplo">ex. 15.00</p>
                     </div>
 
@@ -161,6 +161,23 @@
 
 
         function Adicionar() {
+            const campos = [
+                { campo: restaurante, nome: 'restaurante' },
+                { campo: endereco, nome: 'endereço' },
+                { campo: numero, nome: 'número' },
+                { campo: nome, nome: 'nome do produto' },
+                { campo: categoria, nome: 'categoria' },
+                { campo: preco, nome: 'preço' },
+            ];
+
+            for (const { campo, nome } of campos) {
+                if (!campo.value) {
+                    alert(`O campo ${nome} é obrigatório.`);
+                    campo.focus();
+                    return;
+                }
+            }
+
             const _restaurante = JSON.parse(localStorage.getItem('restaurante')) || {};
             const produtosSalvos = JSON.parse(localStorage.getItem('produtos')) || {};
 
